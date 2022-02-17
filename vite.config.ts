@@ -65,5 +65,22 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            // console.log(id);
+            const name = id.split("node_modules/")[1].split("/")[0];
+            if (["ant-design-vue", "echarts"].includes(name)) {
+              return name;
+            } else {
+              return "vendor";
+            }
+          }
+        },
+      },
+    },
+  },
   define: { "process.env": process.env },
 });

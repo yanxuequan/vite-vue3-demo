@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// import { useStore } from "vuex";
-// const store = useStore();
-// console.log(store)
+import { useStore } from "vuex";
+const store = useStore();
+console.log(store)
 
 // import { getCurrentInstance } from "vue";
 // const { proxy } = getCurrentInstance();

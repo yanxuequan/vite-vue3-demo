@@ -14,13 +14,13 @@ const env = loadEnv(mode, process.cwd());
 const plugins = [];
 if (mode === "production") {
   // 打包时展示依赖分析
-  plugins.push(
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-    })
-  );
+  // plugins.push(
+  //   visualizer({
+  //     open: true,
+  //     gzipSize: true,
+  //     brotliSize: true,
+  //   })
+  // );
 }
 export default defineConfig({
   base: mode === "production" ? "/demo/" : "/",

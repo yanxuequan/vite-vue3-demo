@@ -4,7 +4,16 @@ import "nprogress/nprogress.css";
 
 const routes = [
   { path: "/", redirect: "/home" },
-  { path: "/home", component: () => import("@/components/Home.vue") },
+  {
+    path: "/home",
+    name: "home",
+    component: () => import("@/components/Home.vue"),
+  },
+  {
+    path: "/home2",
+    name: "home2",
+    component: () => import("@/components/Home/index.vue"),
+  },
   { path: "/hello", component: () => import("@/components/HelloWorld.vue") },
 ];
 

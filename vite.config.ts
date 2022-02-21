@@ -3,6 +3,7 @@ import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import { visualizer } from "rollup-plugin-visualizer";
+import copy from "rollup-plugin-copy";
 
 // 组件库按需引入
 import Components from "unplugin-vue-components/vite";
@@ -11,17 +12,6 @@ import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 // https://vitejs.dev/config/
 const mode = process.env.NODE_ENV;
 const env = loadEnv(mode, process.cwd());
-const plugins = [];
-if (mode === "production") {
-  // 打包时展示依赖分析
-  // plugins.push(
-  //   visualizer({
-  //     open: true,
-  //     gzipSize: true,
-  //     brotliSize: true,
-  //   })
-  // );
-}
 export default defineConfig({
   base: mode === "production" ? "/demo/" : "/",
   plugins: [
@@ -36,7 +26,12 @@ export default defineConfig({
     Components({
       resolvers: [AntDesignVueResolver()],
     }),
-    ...plugins,
+    // copy({
+    //   verbose: true,
+    //   hook: "writeBundle",
+    //   targets: [{ src: "src/components/Home/*", dest: "dist/public/Home" }],
+    // }),
+    // visualizer(),
   ],
   resolve: {
     alias: [
@@ -50,7 +45,8 @@ export default defineConfig({
     // css预处理器
     preprocessorOptions: {
       less: {
-        charset: false,
+        // charset: false,
+        javascriptEnabled: true,
         additionalData: '@import "./src/styles.less";',
       },
     },

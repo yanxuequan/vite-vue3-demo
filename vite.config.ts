@@ -64,14 +64,29 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            // console.log(id);
-            const name = id.split("node_modules/")[1].split("/")[0];
-            if (["ant-design-vue", "echarts"].includes(name)) {
+        entryFileNames: "js/[name]-[hash].js",
+        chunkFileNames: "js/[name]-[hash].js",
+        assetFileNames: (assetInfo) => {
+          let assetsDir = "assets/";
+          if (/\.css$/.test(assetInfo.name)) {
+            assetsDir = "css/";
+          }
+          return `${assetsDir}[name]-[hash][extname]`;
+        },
+        manualChunks: (id) => {
+          const match = id.match(/node_modules\/([^\/]+)/);
+          if (match?.length) {
+            const groups = ["ant-design-vue", "echarts"];
+            const name = match[1];
+            if (groups.includes(name)) {
               return name;
             } else {
-              return "vendor";
+              return "libs";
+            }
+          } else {
+            const vmatch = id.match(/src\/views\/([^\/]+)\/.*/);
+            if (vmatch?.length) {
+              return vmatch[1];
             }
           }
         },
